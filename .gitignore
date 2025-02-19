@@ -35,6 +35,5 @@ build/
 .idea/
 *.iml
 
-Primevul_dataset/*
-!Primevul_dataset/primevul_test_paired.jsonl
-!Primevul_dataset/primevul_train_paired.jsonl
+# ignore cache_data file
+cache_data/*

@@ -3,7 +3,7 @@ from prompts import *
 from call_llm import *
 
 
-def lfm_learn_from_mistakes(training_data, few_shot_set, max_few_shot_size, prompt_template):
+def lfm_learn_from_mistakes(training_data, few_shot_set, max_few_shot_size, prompt_template, verbose=False):
     """
     Implements the Learn-from-Mistakes (LFM) algorithm for updating the few-shot set.
 
@@ -18,6 +18,11 @@ def lfm_learn_from_mistakes(training_data, few_shot_set, max_few_shot_size, prom
     """
     # Make a copy to modify
     few_shot_set = few_shot_set.copy()
+    if verbose: 
+        print("Initial few-shot set:")
+        for code, label in few_shot_set:
+            print(f"{code}: {label}")
+        print()
     
     # Iterate over the remaining training data
     for code_snippet, label in training_data:
@@ -44,6 +49,8 @@ def lfm_learn_from_mistakes(training_data, few_shot_set, max_few_shot_size, prom
         
         # If the prediction is incorrect, add the example to the few-shot set
         if predicted_label != label:
+            if verbose:
+                print(f"Incorrect prediction for {code_snippet}: {predicted_label} (expected {label})")
             few_shot_set.append((code_snippet, label))
         
         # Stop if the few-shot set reaches the max size
